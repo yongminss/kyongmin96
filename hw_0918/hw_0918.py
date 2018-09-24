@@ -33,16 +33,20 @@ while running:
     handle_events()
     if x > tx:
         x -= speed
-        if x < tx: x = tx
+        if x <= tx:
+            x = tx
     elif x < tx:
         x += speed
-        if x > tx: x = tx
+        if x >= tx:
+            x = tx
     if y > ty:
         y -= speed
-        if y < ty: y = ty
+        if y <= ty:
+            y = ty
     elif y < ty:
         y += speed
-        if y > ty: y = ty
+        if y >= ty:
+            y = ty
 
     if (x, y) == (tx, ty):
         hide_cursor()

@@ -22,17 +22,38 @@ class Boy:
         self.x += self.speed
 
 def handle_events():
+
     global running
-    global x
+    global x, y
+
     events = get_events()
+
     for e in events:
         if e.type == SDL_QUIT:
-            running = False
-        elif e.type == SDL_KEYDOWN:
             if e.key == SDLK_ESCAPE:
                 running = False
-        elif e.type = SDL_MOUSEBUU
+        elif e.type == SDL_MOUSEMOTION:
+            tx = e.x
+            ty = 600 - e.y
 
+def character_move():
+    if self.x > tx:
+        self.x -= speed
+        if self.x <= tx:
+            self.x = tx
+    elif self.x < tx:
+        self.x += speed
+        if self.x >= tx:
+            self.x = tx
+    elif self.y > ty:
+        self.y -= speed
+        if self.y <= ty:
+            self.y = ty
+    elif self.y < ty:
+        self.y += speed
+        if self.y >= ty:
+            self.y = ty
+            
 open_canvas()
 
 g = Grass()
@@ -42,7 +63,7 @@ boys = [ Boy() for i in range(20)]
 running = True
 
 while running:
-    #handle_events()
+    handle_events()
     
     for b in boys:
         b.update()
@@ -52,7 +73,7 @@ while running:
     g.draw()
     for b in boys:
         b.draw()
-    
+    character_move()
     update_canvas()
 
     delay(0.01)
