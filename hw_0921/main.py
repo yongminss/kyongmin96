@@ -12,48 +12,43 @@ class Boy:
     def __init__(self):
         self.x = random.randint(0, 200)
         self.y = random.randint(90, 550)
+        self.tx, self.ty = self.x, self.y
         self.frame = random.randint(0, 7)
-        self.speed = random.uniform(1.0, 3.0)
+        self.speed = random.uniform(5.0, 10.0)
         self.image = load_image('run_animation.png')
+
     def draw(self):
         self.image.clip_draw(self.frame * 100, 0, 100, 100, self.x, self.y)
+
     def update(self):
         self.frame = (self.frame + 1) % 8
-        self.x += self.speed
 
-def handle_events():
+    def move(self):
+        if self.x < self.tx:
+            self.x += self.speed
+            if self.x >= self.tx: self.x = self.tx
+        elif self.x > self.tx:
+            self.x -= self.speed
+            if self.x <= self.tx: self.x = self.tx
+        if self.y < self.ty:
+            self.y += self.speed
+            if self.y >= self.ty: self.y = self.ty
+        if self.y > self.ty:
+            self.y -= self.speed
+            if self.y <= self.ty: self.y = self.ty
 
-    global running
-    global x, y
+    def handle_events(self):
 
-    events = get_events()
+        events = get_events()
 
-    for e in events:
-        if e.type == SDL_QUIT:
-            if e.key == SDLK_ESCAPE:
-                running = False
-        elif e.type == SDL_MOUSEMOTION:
-            tx = e.x
-            ty = 600 - e.y
+        for e in events:
+            if e.type == SDL_QUIT:
+                if e.key == SDLK_ESCAPE:
+                    running = False
+            elif e.type == SDL_MOUSEMOTION:
+                self.tx = e.x
+                self.ty = 600 - e.y
 
-def character_move():
-    if self.x > tx:
-        self.x -= speed
-        if self.x <= tx:
-            self.x = tx
-    elif self.x < tx:
-        self.x += speed
-        if self.x >= tx:
-            self.x = tx
-    elif self.y > ty:
-        self.y -= speed
-        if self.y <= ty:
-            self.y = ty
-    elif self.y < ty:
-        self.y += speed
-        if self.y >= ty:
-            self.y = ty
-            
 open_canvas()
 
 g = Grass()
@@ -63,8 +58,6 @@ boys = [ Boy() for i in range(20)]
 running = True
 
 while running:
-    handle_events()
-    
     for b in boys:
         b.update()
 
@@ -73,10 +66,15 @@ while running:
     g.draw()
     for b in boys:
         b.draw()
-    character_move()
+
+    b.handle_events()
+
+    for b in boys:
+        b.move()
+    
     update_canvas()
 
     delay(0.01)
-    get_events()
+    
 
 close_canvas()
