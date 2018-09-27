@@ -37,6 +37,12 @@ while running:
     elif x > tx:
         x -= speed
         if x <= tx: x = tx
+    if y < ty:
+        y += speed
+        if y >= ty: y = ty
+    elif y > ty:
+        y -= speed
+        if y <= ty: t = ty
 
     if (x, y) == (tx, ty):
         hide_cursor()

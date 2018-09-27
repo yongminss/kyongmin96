@@ -33,7 +33,7 @@ class Boy:
         if self.y < self.ty:
             self.y += self.speed
             if self.y >= self.ty: self.y = self.ty
-        if self.y > self.ty:
+        elif self.y > self.ty:
             self.y -= self.speed
             if self.y <= self.ty: self.y = self.ty
 
@@ -55,6 +55,7 @@ g = Grass()
 b = Boy()
 boys = [ Boy() for i in range(20)]
 
+
 running = True
 
 while running:
@@ -64,17 +65,15 @@ while running:
     clear_canvas()
 
     g.draw()
+    
     for b in boys:
         b.draw()
-
-    b.handle_events()
-
-    for b in boys:
+        b.handle_events()
         b.move()
     
     update_canvas()
 
     delay(0.01)
-    
+    get_events()
 
 close_canvas()
