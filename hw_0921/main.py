@@ -12,7 +12,7 @@ class Boy:
     def __init__(self):
         self.x = random.randint(0, 200)
         self.y = random.randint(90, 550)
-        self.tx, self.ty = self.x, self.y
+        tx, ty = self.x, self.y
         self.frame = random.randint(0, 7)
         self.speed = random.uniform(5.0, 10.0)
         self.image = load_image('run_animation.png')
@@ -24,20 +24,23 @@ class Boy:
         self.frame = (self.frame + 1) % 8
 
     def move(self):
-        if self.x < self.tx:
+        if self.x < tx:
             self.x += self.speed
-            if self.x >= self.tx: self.x = self.tx
-        elif self.x > self.tx:
+            if self.x >= tx: self.x = tx
+        elif self.x > tx:
             self.x -= self.speed
-            if self.x <= self.tx: self.x = self.tx
-        if self.y < self.ty:
+            if self.x <= tx: self.x = tx
+        if self.y < ty:
             self.y += self.speed
-            if self.y >= self.ty: self.y = self.ty
-        elif self.y > self.ty:
+            if self.y >= ty: self.y = ty
+        elif self.y > ty:
             self.y -= self.speed
-            if self.y <= self.ty: self.y = self.ty
+            if self.y <= ty: self.y = ty
 
     def handle_events(self):
+
+        global running
+        global tx, ty
 
         events = get_events()
 
@@ -46,8 +49,10 @@ class Boy:
                 if e.key == SDLK_ESCAPE:
                     running = False
             elif e.type == SDL_MOUSEMOTION:
-                self.tx = e.x
-                self.ty = 600 - e.y
+                tx = e.x
+                ty = 600 - e.y
+
+tx, ty = 800 // 2, 600 // 2
 
 open_canvas()
 
@@ -65,10 +70,9 @@ while running:
     clear_canvas()
 
     g.draw()
-    
+    b.handle_events()
     for b in boys:
         b.draw()
-        b.handle_events()
         b.move()
     
     update_canvas()
@@ -77,3 +81,4 @@ while running:
     get_events()
 
 close_canvas()
+
