@@ -3,7 +3,7 @@ import random
 
 class Grass:
     def __init__(self):
-        self.image = load_image('grass.png')
+        self.image = load_image('../image/grass.png')
         
     def draw(self):
         self.image.draw(400,30)
@@ -15,7 +15,7 @@ class Boy:
         tx, ty = self.x, self.y
         self.frame = random.randint(0, 7)
         self.speed = random.uniform(5.0, 10.0)
-        self.image = load_image('run_animation.png')
+        self.image = load_image('../image/run_animation.png')
 
     def draw(self):
         self.image.clip_draw(self.frame * 100, 0, 100, 100, self.x, self.y)
@@ -51,8 +51,6 @@ class Boy:
             elif e.type == SDL_MOUSEMOTION:
                 tx = e.x
                 ty = 600 - e.y
-            elif e.key == SDLK_ESCAPE:
-                running = False
 
 tx, ty = 800 // 2, 600 // 2
 
