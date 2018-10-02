@@ -52,8 +52,8 @@ def change_state(state):
 
 def push_state(state):
     global stack
-    if (len(stack) > 0):
-        stack[-1].pause()
+    #if (len(stack) > 0):
+    #    stack[-1].pause()
     stack.append(state)
     state.enter()
 
@@ -83,7 +83,7 @@ def run(start_state):
     running = True
     stack = [start_state]
     start_state.enter()
-    while (running):
+    while (running and (len(stack) > 0)):
         stack[-1].handle_events()
         stack[-1].update()
         stack[-1].draw()
@@ -93,9 +93,9 @@ def run(start_state):
         stack.pop()
 
 
-def test_game_framework():
-    start_state = TestGameState('StartState')
-    run(start_state)
+#def test_game_framework():
+#    start_state = TestGameState('StartState')
+#    run(start_state)
 
 
 
