@@ -5,7 +5,7 @@ class Title:
     def __init__(self):
         self.image = load_image('../term/cookierun_image/cookierun_title.png')
     def draw(self):
-        self.image.draw(0,0)
+        self.image.draw(400,300)
 
 def handle_events():
 
