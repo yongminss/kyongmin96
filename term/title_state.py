@@ -1,5 +1,6 @@
 from pico2d import *
 import game_framework
+import cookie_state
 
 class Title:
     def __init__(self):
@@ -14,8 +15,11 @@ def handle_events():
     for e in events:
         if e.type == SDL_QUIT:
             game_framework.quit()
-        elif (e.type, e.key) == (SDL_KEYDOWN, SDLK_ESCAPE):
-            game_framework.quit()
+        elif e.type == SDL_KEYDOWN:
+            if e.key == SDLK_ESCAPE:
+                game_framework.quit()
+            elif e.key == SDLK_SPACE:
+                game_framework.change_state(cookie_state)
             
 def enter():
 

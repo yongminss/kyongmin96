@@ -43,8 +43,8 @@ def exit():
     pass
 
 if __name__ == '__main__':
-    import sys
-    current_module = sys.modules[__name__]  
-    open_canvas()
-    game_framework.run(current_module)
-    close_canvas()
+	import sys
+	current_module = sys.modules[__name__]	
+	open_canvas()
+	game_framework.run(current_module)
+	close_canvas()
