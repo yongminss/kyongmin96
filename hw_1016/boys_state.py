@@ -93,7 +93,17 @@ def handle_events():
 def enter():
     global boys, grass
 
-    boys = [ Boy() for i in range(10) ]
+    boys = []
+    fh = open('boys_data.json', 'r')
+    data = json.load(fh)
+    for e in data['boys']:
+        b = Boy()
+        b.name = e['name']
+        b.x = e['x']
+        b.y = e['y']
+        b.speed = e['speed']
+        boys.append(b)
+    
     grass = Grass()
 
 
