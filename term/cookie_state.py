@@ -2,17 +2,23 @@ from pico2d import *
 import game_framework
 
 class Cookie:
-    RUN, JUMP, DEAD = 0, 1, 2
+    RUN, JUMP, SLIDE = 0, 1, 2
     
     def __init__(self):
-        pass
+        self.cookie = load_image('../term/cookierun_image/Cookie_Run_State.png')
+        self.state = self.RUN   # 쿠키의 상태
+        self.x = 200    # 쿠키 x좌표
+        self.y = 200    # 쿠키 y좌표
+        self.frame = 0
 
     def draw(self):
-        pass
+        self.cookie.clip_draw(self.frame * 120, 382 - 135, 120, 135, self.x, self.y)
+        #self.cookie.clip_draw(0, 382 - 135 - 165, 140, 165, self.x, self.y)
+        #self.cookie.clip_draw(0, 382 - 135 - 165 - 80, 170, 80, self.x, self.y)
 
     def update(self):
-        pass
-                
+        self.frame = (self.frame + 1) % 3
+        
     def handle_events(self, e):
         pass
         
