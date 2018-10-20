@@ -1,6 +1,13 @@
 from pico2d import *
 import game_framework
 
+class Grass:
+    def __init__(self):
+        self.image = load_image('../term/cookierun_image/grass.png')
+
+    def draw(self):
+        self.image.draw(400, 30)
+
 class Cookie:
     RUN, JUMP, DOUBLE_JUMP, SLIDE = 0, 1, 2, 3
     
@@ -8,7 +15,7 @@ class Cookie:
         self.cookie = load_image('../term/cookierun_image/Cookie_Run_State.png')
         self.state = self.RUN   # 쿠키의 상태
         self.x = 200    # 쿠키 x좌표
-        self.y = 200    # 쿠키 y좌표
+        self.y = 120    # 쿠키 y좌표
         self.frame = 0
 
     def draw(self):
@@ -39,8 +46,7 @@ class Cookie:
         
 
 def handle_events():
-    global state
-        
+    
     events = get_events()
 
     for e in events:
@@ -51,13 +57,15 @@ def handle_events():
                     
 
 def enter():
-    global cookie
+    global grass, cookie
 
+    grass = Grass()
     cookie = Cookie()
 
 
 def draw():
     clear_canvas()
+    grass.draw()
     cookie.draw()
     update_canvas()
 
