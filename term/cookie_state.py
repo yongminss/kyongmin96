@@ -6,7 +6,7 @@ class Cookie:
     
     def __init__(self):
         self.cookie = load_image('../term/cookierun_image/Cookie_Run_State.png')
-        self.state = self.JUMP   # 쿠키의 상태
+        self.state = self.RUN   # 쿠키의 상태
         self.x = 200    # 쿠키 x좌표
         self.y = 200    # 쿠키 y좌표
         self.frame = 0
@@ -17,14 +17,20 @@ class Cookie:
                                   self.x, self.y)
         elif self.state == self.JUMP:   # 1단 점프
             self.cookie.clip_draw(0, 382 - 135 - 165, 140, 165, self.x, self.y)
+        elif self.state == self.DOUBLE_JUMP:    # 2단 점프
+            self.cookie.clip_draw(self.frame * 140, 382 - 135 - 165, 140, 165,
+                                  self.x, self.y)
         elif self.state == self.SLIDE:  # 슬라이딩
-            self.cookie.clip_draw(self.frame * 170, 382 - 135 - 165 - 80, 170, 80, self.x, self.y)
+            self.cookie.clip_draw(self.frame * 170, 382 - 135 - 165 - 80, 170, 80,
+                                  self.x, self.y)
 
     def update(self):
         if self.state == self.RUN:
             self.frame = (self.frame + 1) % 3
         elif self.state == self.JUMP:
             self.frame = (self.frame + 1) % 1
+        elif self.state == self.DOUBLE_JUMP:
+            self.frame = (self.frame + 1) % 6
         elif self.state == self.SLIDE:
             self.frame = (self.frame + 1) % 2
         
@@ -57,7 +63,7 @@ def draw():
 
 def update():
     cookie.update()
-    delay(0.1)
+    delay(0.08)
 
 def exit():
     pass
