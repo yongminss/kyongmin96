@@ -2,31 +2,36 @@ from pico2d import *
 import game_framework
 
 class Cookie:
+    RUN, JUMP, DEAD = 0, 1, 2
+    
     def __init__(self):
-        self.cookierun_1 = load_image('../term/cookierun_image/cookie_run_1.png')
-        self.cookierun_2 = load_image('../term/cookierun_image/cookie_run_2.png')
-        self.x = 200
-        self.y = 200
-        self.state = 0
+        pass
 
     def draw(self):
-        if self.state == 1:
-            self.cookierun_1.draw(self.x, self.y)
-        elif self.state == 2:
-            self.cookierun_2.draw(self.x, self.y)
+        pass
 
     def update(self):
-        self.state += 1
-        if self.state > 2:
-            self.state = 1
-
+        pass
+                
+    def handle_events(self, e):
+        pass
+        
 
 def handle_events():
+    global state
+        
     events = get_events()
+
+    for e in events:
+        if e.type == SDL_QUIT:
+             game_framework.quit()
+        else:
+            cookie.handle_events(e)
+                    
 
 def enter():
     global cookie
-    
+
     cookie = Cookie()
 
 
