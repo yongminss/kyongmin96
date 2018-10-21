@@ -2,15 +2,32 @@ from pico2d import *
 import game_framework
 
 class Stage:
+    STAGE_1, STAGE_2 = 0, 1
+    
     def __init__(self):
         self.First_Stage = load_image('../term/cookierun_image/Stage_01.png')
+        self.Second_Stage = load_image('../term/cookierun_image/Stage_02.png')
         self.frame = 0
+        self.state = self.STAGE_1
 
     def draw(self):
-        self.First_Stage.clip_draw(self.frame, 0, 800, 600, 400, 300)
+        if self.state == self.STAGE_1:
+            self.First_Stage.clip_draw(self.frame, 0, 800, 600, 400, 300)
+            if self.frame >= 2490:
+                self.frame = 0
+                self.state = self.STAGE_2
+        elif self.state == self.STAGE_2:
+            self.Second_Stage.clip_draw(self.frame, 0, 800, 600, 400, 300)
+            if self.frame >= 2490:
+                game_framework.quit()
+            
+            
 
     def update(self):
-        self.frame += 10
+        if self.state == self.STAGE_1:
+            self.frame += 10
+        elif self.state == self.STAGE_2:
+            self.frame += 10
 
 class Ground:
     def __init__(self):
@@ -18,6 +35,7 @@ class Ground:
 
     def draw(self):
         self.First_Ground.draw(400, 350)
+
 
 class UI:
     def __init__(self):
@@ -29,6 +47,7 @@ class UI:
 
     def update(self):
         self.HP_Count -= 1
+
 
 class Cookie:
     RUN, JUMP, DOUBLE_JUMP, SLIDE = 0, 1, 2, 3
