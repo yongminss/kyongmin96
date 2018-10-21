@@ -1,12 +1,22 @@
 from pico2d import *
 import game_framework
 
-class Grass:
+class Stage:
     def __init__(self):
-        self.image = load_image('../term/cookierun_image/grass.png')
+        pass
 
     def draw(self):
-        self.image.draw(400, 30)
+        pass
+
+    def update(self):
+        pass
+
+class Ground:
+    def __init__(self):
+        self.First_Ground = load_image('../term/cookierun_image/Ground_01.png')
+
+    def draw(self):
+        self.First_Ground.draw(400, 350)
 
 class Cookie:
     RUN, JUMP, DOUBLE_JUMP, SLIDE = 0, 1, 2, 3
@@ -14,8 +24,8 @@ class Cookie:
     def __init__(self):
         self.cookie = load_image('../term/cookierun_image/Cookie_Run_State.png')
         self.state = self.RUN   # 쿠키의 상태
-        self.x = 200    # 쿠키 x좌표
-        self.y = 120    # 쿠키 y좌표
+        self.x = 300    # 쿠키 x좌표
+        self.y = 215    # 쿠키 y좌표
         self.frame = 0
 
     def draw(self):
@@ -53,24 +63,24 @@ def handle_events():
         if e.type == SDL_QUIT:
              game_framework.quit()
         else:
-            cookie.handle_events(e)
+            C.handle_events(e)
                     
 
 def enter():
-    global grass, cookie
+    global G, C
 
-    grass = Grass()
-    cookie = Cookie()
+    G = Ground()
+    C = Cookie()
 
 
 def draw():
     clear_canvas()
-    grass.draw()
-    cookie.draw()
+    G.draw()
+    C.draw()
     update_canvas()
 
 def update():
-    cookie.update()
+    C.update()
     delay(0.08)
 
 def exit():
