@@ -3,13 +3,15 @@ import game_framework
 
 class Stage:
     def __init__(self):
-        pass
+        self.First_Stage = load_image('../term/cookierun_image/Stage_01.png')
+        self.frame = 0
 
     def draw(self):
-        pass
+        self.First_Stage.clip_draw(self.frame, 0, 800, 600, 400, 300)
 
     def update(self):
-        pass
+        self.frame += 10
+        print(self.frame)
 
 class Ground:
     def __init__(self):
@@ -67,19 +69,22 @@ def handle_events():
                     
 
 def enter():
-    global G, C
+    global S, G, C
 
+    S = Stage()
     G = Ground()
     C = Cookie()
 
 
 def draw():
     clear_canvas()
-    G.draw()
-    C.draw()
+    S.draw()    # 스테이지
+    G.draw()    # 바닥
+    C.draw()    # 쿠키
     update_canvas()
 
 def update():
+    S.update()
     C.update()
     delay(0.08)
 
