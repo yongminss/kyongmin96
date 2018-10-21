@@ -11,7 +11,6 @@ class Stage:
 
     def update(self):
         self.frame += 10
-        print(self.frame)
 
 class Ground:
     def __init__(self):
@@ -20,13 +19,24 @@ class Ground:
     def draw(self):
         self.First_Ground.draw(400, 350)
 
+class UI:
+    def __init__(self):
+        self.HP = load_image('../term/cookierun_image/HP.png')
+        self.HP_Count = 500
+
+    def draw(self):
+        self.HP.clip_draw(0, 0, self.HP_Count, 64, 400, 500)
+
+    def update(self):
+        self.HP_Count -= 1
+
 class Cookie:
     RUN, JUMP, DOUBLE_JUMP, SLIDE = 0, 1, 2, 3
     
     def __init__(self):
         self.cookie = load_image('../term/cookierun_image/Cookie_Run_State.png')
         self.state = self.RUN   # 쿠키의 상태
-        self.x = 300    # 쿠키 x좌표
+        self.x = 250    # 쿠키 x좌표
         self.y = 215    # 쿠키 y좌표
         self.frame = 0
 
@@ -69,10 +79,11 @@ def handle_events():
                     
 
 def enter():
-    global S, G, C
+    global S, G, U, C
 
     S = Stage()
     G = Ground()
+    U = UI()
     C = Cookie()
 
 
@@ -80,13 +91,15 @@ def draw():
     clear_canvas()
     S.draw()    # 스테이지
     G.draw()    # 바닥
+    U.draw()    # UI
     C.draw()    # 쿠키
     update_canvas()
 
 def update():
     S.update()
+    U.update()
     C.update()
-    delay(0.08)
+    delay(0.06)
 
 def exit():
     pass
