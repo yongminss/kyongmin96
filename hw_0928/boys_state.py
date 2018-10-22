@@ -91,7 +91,7 @@ def handle_events():
 def enter():
     global boys, grass
 
-    boys = [ Boy() for i in range(1000) ]
+    boys = [ Boy() for i in range(1) ]
     grass = Grass()
 
 
