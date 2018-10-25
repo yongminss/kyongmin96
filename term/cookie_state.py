@@ -88,15 +88,21 @@ class Cookie:
 class Item:
     def __init__(self):
         self.potion = load_image('../term/cookierun_image/Item_HP.png')
-        self.p_x = 700
-        self.p_y = 215
+        self.jelly = load_image('../term/cookierun_image/Item_Jelly.png')
+        #self.p_x = 700
+        #self.p_y = 215
+        self.j_x = 700
+        self.j_y = 215
+        
 
     def draw(self):
-        self.potion.draw(self.p_x, self.p_y)
+        #self.potion.draw(self.p_x, self.p_y)
+        self.jelly.draw(self.j_x, self.j_y)
         
 
     def update(self):
-        self.p_x -= 5
+        #self.p_x -= 5
+        self.j_x -= 5
 
 
 def handle_events():
