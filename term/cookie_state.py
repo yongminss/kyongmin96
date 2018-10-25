@@ -19,15 +19,14 @@ class Stage:
         elif self.state == self.STAGE_2:
             self.Second_Stage.clip_draw(self.frame, 0, 800, 600, 400, 300)
             if self.frame >= 2490:
-                game_framework.quit()
-            
-            
+                game_framework.quit()     
 
     def update(self):
         if self.state == self.STAGE_1:
             self.frame += 10
         elif self.state == self.STAGE_2:
             self.frame += 10
+
 
 class Ground:
     def __init__(self):
@@ -84,7 +83,21 @@ class Cookie:
         
     def handle_events(self, e):
         pass
+
+
+class Item:
+    def __init__(self):
+        self.potion = load_image('../term/cookierun_image/Item_HP.png')
+        self.p_x = 700
+        self.p_y = 215
+
+    def draw(self):
+        self.potion.draw(self.p_x, self.p_y)
         
+
+    def update(self):
+        self.p_x -= 5
+
 
 def handle_events():
     
@@ -98,12 +111,13 @@ def handle_events():
                     
 
 def enter():
-    global S, G, U, C
+    global S, G, U, C, I
 
     S = Stage()
     G = Ground()
     U = UI()
     C = Cookie()
+    I = Item()
 
 
 def draw():
@@ -112,12 +126,14 @@ def draw():
     G.draw()    # 바닥
     U.draw()    # UI
     C.draw()    # 쿠키
+    I.draw()    # 아이템
     update_canvas()
 
 def update():
-    S.update()
-    U.update()
-    C.update()
+    S.update()  # 스테이지
+    U.update()  # UI
+    C.update()  # 쿠키
+    I.update()  # 아이템
     delay(0.06)
 
 def exit():
