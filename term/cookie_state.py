@@ -45,7 +45,7 @@ class UI:
         self.HP.clip_draw(0, 0, self.HP_Count, 64, 400, 500)
 
     def update(self):
-        self.HP_Count -= 1
+        self.HP_Count -= 2
 
 
 class Cookie:
@@ -109,6 +109,7 @@ class Potion:
         if self.state == self.ON:
             self.x -= 10
 
+
 class Jelly:
     jelly = None
     OFF, ON = 0, 1
@@ -134,6 +135,27 @@ class Jelly:
             if self.state == self.ON:
                 self.x -= 10
 
+class Jump_Trap:
+    def __init__(self):
+        pass
+
+    def draw(self):
+        pass
+
+    def update(self):
+        pass
+    
+
+class Slide_Trap:
+    def __init__(self):
+        pass
+
+    def draw(self):
+        pass
+
+    def update(self):
+        pass
+
 
 def handle_events():
     
@@ -147,7 +169,7 @@ def handle_events():
                     
 
 def enter():
-    global S, G, U, C, P, J
+    global S, G, U, C, P, J, J_T, S_T
 
     S = Stage()
     G = Ground()
@@ -155,7 +177,8 @@ def enter():
     C = Cookie()
     P = Potion()
     J = Jelly()
-
+    J_T = Jump_Trap()
+    S_T = Slide_Trap()
 
 def draw():
     clear_canvas()
@@ -165,14 +188,18 @@ def draw():
     C.draw()    # 쿠키
     P.draw()    # 포션
     J.draw()    # 젤리
+    J_T.draw()  # 점프 함정
+    S_T.draw()  # 슬라이딩 함정
     update_canvas()
 
 def update():
-    S.update()  # 스테이지
-    U.update()  # UI
-    C.update()  # 쿠키
-    P.update()  # 포션
-    J.update()  # 젤리
+    S.update()      # 스테이지
+    U.update()      # UI
+    C.update()      # 쿠키
+    P.update()      # 포션
+    J.update()      # 젤리
+    J_T.update()    # 점프 함정
+    S_T.update()    # 슬라이딩 함정
     delay(0.06)
 
 def exit():
