@@ -85,24 +85,54 @@ class Cookie:
         pass
 
 
-class Item:
+class Potion:
+    potion = None
+    OFF, ON = 0, 1 
     def __init__(self):
-        self.potion = load_image('../term/cookierun_image/Item_HP.png')
-        self.jelly = load_image('../term/cookierun_image/Item_Jelly.png')
-        #self.p_x = 700
-        #self.p_y = 215
-        self.j_x = 700
-        self.j_y = 215
-        
+        if Potion.potion == None:
+            self.potion = load_image('../term/cookierun_image/Item_HP.png')
+        self.x = 900  # 포션 x좌표
+        self.y = 215  # 포션 y좌표
+        self.state = self.OFF
+        self.frame = 0
 
     def draw(self):
-        #self.potion.draw(self.p_x, self.p_y)
-        self.jelly.draw(self.j_x, self.j_y)
+        if self.state == self.ON:
+            self.potion.draw(self.x, self.y)
         
 
     def update(self):
-        #self.p_x -= 5
-        self.j_x -= 5
+        self.frame += 10
+        if self.frame >= 2490:
+                self.frame = 0
+        # 포션 이벤트
+        if self.state == self.ON:
+            self.x -= 10
+
+class Jelly:
+    jelly = None
+    OFF, ON = 0, 1
+    def __init__(self):
+        if Jelly.jelly == None:
+            self.jelly = load_image('../term/cookierun_image/Item_Jelly.png')
+        self.x = 900  # 젤리 x 좌표
+        self.y = 215  # 젤리 y 좌표
+        self.state = self.OFF
+        self.frame = 0
+
+    def draw(self):
+        if self.state == self.ON:
+            self.jelly.draw(self.x, self.y)
+
+    def update(self):
+        self.frame += 10
+        if self.frame >= 2490:
+                self.frame = 0
+        # 젤리 이벤트
+        if self.frame > 50:
+            self.state = self.ON
+            if self.state == self.ON:
+                self.x -= 10
 
 
 def handle_events():
@@ -117,13 +147,14 @@ def handle_events():
                     
 
 def enter():
-    global S, G, U, C, I
+    global S, G, U, C, P, J
 
     S = Stage()
     G = Ground()
     U = UI()
     C = Cookie()
-    I = Item()
+    P = Potion()
+    J = Jelly()
 
 
 def draw():
@@ -132,14 +163,16 @@ def draw():
     G.draw()    # 바닥
     U.draw()    # UI
     C.draw()    # 쿠키
-    I.draw()    # 아이템
+    P.draw()    # 포션
+    J.draw()    # 젤리
     update_canvas()
 
 def update():
     S.update()  # 스테이지
     U.update()  # UI
     C.update()  # 쿠키
-    I.update()  # 아이템
+    P.update()  # 포션
+    J.update()  # 젤리
     delay(0.06)
 
 def exit():
