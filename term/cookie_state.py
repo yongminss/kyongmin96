@@ -106,8 +106,10 @@ class Potion:
         if self.frame >= 2490:
                 self.frame = 0
         # 포션 이벤트
-        if self.state == self.ON:
-            self.x -= 10
+        if self.frame > 100:
+            self.state = self.ON
+            if self.state == self.ON:
+                self.x -= 10
 
 
 class Jelly:
@@ -136,14 +138,30 @@ class Jelly:
                 self.x -= 10
 
 class Jump_Trap:
+    trap01 = None  # 1단 점프 함정
+    OFF, ON = 0, 1
     def __init__(self):
-        pass
+        # 1단 점프 함정 초기화
+        if Jump_Trap.trap01 == None:
+            self.trap01 = load_image('../term/cookierun_image/Jump_trap_01.png')
+        self.trap01_x = 900
+        self.trap01_y = 175
+        self.trap01_state = self.OFF
+
+        self.frame = 0
 
     def draw(self):
-        pass
+        if self.trap01_state == self.ON:
+            self.trap01.draw(self.trap01_x, self.trap01_y)
 
     def update(self):
-        pass
+        self.frame += 10
+        # 1단 점프 이벤트
+        if self.frame > 150:
+            self.trap01_state = self.ON
+        # 1단 점프 state -> ON 일 때,
+        if self.trap01_state == self.ON:
+            self.trap01_x -= 10
     
 
 class Slide_Trap:
