@@ -1,5 +1,6 @@
 from pico2d import *
 import game_framework
+import game_world
 
 class Stage:
     STAGE_1, STAGE_2 = 0, 1
@@ -228,27 +229,30 @@ def enter():
     J = Jelly()
     J_T = Jump_Trap()
     S_T = Slide_Trap()
+    game_world.add_object(S, game_world.layer_bg)
 
 def draw():
     clear_canvas()
-    S.draw()    # 스테이지
-    G.draw()    # 바닥
+    #S.draw()    # 스테이지
+    #G.draw()    # 바닥
     #U.draw()    # UI
-    C.draw()    # 쿠키
-    P.draw()    # 포션
-    J.draw()    # 젤리
-    J_T.draw()  # 점프 함정
-    S_T.draw()  # 슬라이딩 함정
+    #C.draw()    # 쿠키
+    #P.draw()    # 포션
+    #J.draw()    # 젤리
+    #J_T.draw()  # 점프 함정
+    #S_T.draw()  # 슬라이딩 함정
+    game_world.draw()
     update_canvas()
 
 def update():
-    S.update()      # 스테이지
-    U.update()      # UI
-    C.update()      # 쿠키
-    P.update()      # 포션
-    J.update()      # 젤리
-    J_T.update()    # 점프 함정
-    S_T.update()    # 슬라이딩 함정
+    #S.update()      # 스테이지
+    #U.update()      # UI
+    #C.update()      # 쿠키
+    #P.update()      # 포션
+    #J.update()      # 젤리
+    #J_T.update()    # 점프 함정
+    #S_T.update()    # 슬라이딩 함정
+    game_world.update()
     delay(0.06)
 
 def exit():
