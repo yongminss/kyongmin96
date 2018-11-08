@@ -233,7 +233,7 @@ def draw():
     clear_canvas()
     S.draw()    # 스테이지
     G.draw()    # 바닥
-    U.draw()    # UI
+    #U.draw()    # UI
     C.draw()    # 쿠키
     P.draw()    # 포션
     J.draw()    # 젤리
