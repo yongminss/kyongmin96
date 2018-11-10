@@ -1,5 +1,6 @@
 from pico2d import *
 import game_world
+import config
 import time
 
 class RunState:
@@ -65,6 +66,10 @@ class Cookie:
         self.y = 215    # 쿠키 y좌표
         self.frame = 0
 
+    def get_bb(self):
+        if self.state == self.RUN:
+            return self.x - 60, self.y - 65, self.x + 60, self.y + 65
+
     def draw(self):
         if self.state == self.RUN:              # 달리기
             self.cookie.clip_draw(self.frame * 120, 382 - 135, 120, 135,
@@ -77,6 +82,9 @@ class Cookie:
         elif self.state == self.SLIDE:          # 슬라이딩
             self.cookie.clip_draw(self.frame * 170, 382 - 135 - 165 - 80, 170, 80,
                                   self.x, self.y)
+        # 충돌체크 박스
+        if config.draws_bounding_box:
+            draw_rectangle(*self.get_bb())
 
     def update(self):
         if self.state == self.RUN:
