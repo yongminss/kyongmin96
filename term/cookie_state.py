@@ -7,8 +7,9 @@ from ground import Ground
 from hp import HP
 from potion import Potion
 from jelly import Jelly
-from trap1 import jTrap
-from trap2 import sTrap
+from jtrap import jTrap
+from djtrap import djTrap
+from strap import sTrap
 
 def handle_events():
     
@@ -35,7 +36,7 @@ def collides(a, b):
 
 def enter():
 
-    global stage, ground, hp, cookie, potion, jelly, jtrap, strap
+    global stage, ground, hp, cookie, potion, jelly, jtrap, djtrap, strap
 
     stage = Stage()         # 스테이지
     ground = Ground()       # 바닥
@@ -44,6 +45,7 @@ def enter():
     potion = Potion()       # HP포션
     jelly = Jelly()         # 젤리
     jtrap = jTrap()         # 점프 함정
+    djtrap = djTrap()       # 2단 점프 함정
     strap = sTrap()         # 슬라이드 함정
     
     game_world.add_object(stage, game_world.layer_bg)
@@ -53,6 +55,7 @@ def enter():
     game_world.add_object(potion, game_world.layer_obstacle)
     game_world.add_object(jelly, game_world.layer_obstacle)
     game_world.add_object(jtrap, game_world.layer_obstacle)
+    game_world.add_object(djtrap, game_world.layer_obstacle)
     game_world.add_object(strap, game_world.layer_obstacle)
     
 
@@ -65,7 +68,6 @@ def update():
     game_world.update()
     for jelly in game_world.objects_at_layer(game_world.layer_obstacle):
         if collides(cookie, jelly):
-            print("충돌: ", jelly)
             game_world.remove_object(jelly)
     delay(0.06)
 

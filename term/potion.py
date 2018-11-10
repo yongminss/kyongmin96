@@ -1,4 +1,5 @@
 from pico2d import *
+import config
 
 class Potion:
     potion = None
@@ -11,9 +12,15 @@ class Potion:
         self.state = self.OFF
         self.frame = 0
 
+    def get_bb(self):
+        return self.x - 20, self.y - 20, self.x + 20, self.y + 20
+
     def draw(self):
         if self.state == self.ON:
             self.potion.draw(self.x, self.y)
+        # 충돌체크 박스
+        if config.draws_bounding_box:
+            draw_rectangle(*self.get_bb())
         
     def update(self):
         self.frame += 10

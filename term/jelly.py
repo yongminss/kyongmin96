@@ -18,7 +18,6 @@ class Jelly:
     def draw(self):
         if self.state == self.ON:
             self.jelly.draw(self.x, self.y)
-
         # 충돌체크 박스
         if config.draws_bounding_box:
             draw_rectangle(*self.get_bb())

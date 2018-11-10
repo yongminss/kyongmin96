@@ -1,4 +1,5 @@
 from pico2d import *
+import config
 
 class sTrap:
     image = None
@@ -10,10 +11,16 @@ class sTrap:
         self.y = 450
         self.state = self.OFF
         self.frame = 0
+
+    def get_bb(self):
+        return self.x - 100, self.y - 225, self.x + 100, self.y + 150
         
     def draw(self):
         if self.state == self.ON:
             self.image.draw(self.x, self.y)
+        # 충돌체크 박스
+        if config.draws_bounding_box:
+            draw_rectangle(*self.get_bb())
 
     def update(self):
         self.frame += 10
