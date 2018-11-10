@@ -63,6 +63,10 @@ def draw():
 
 def update():
     game_world.update()
+    for jelly in game_world.objects_at_layer(game_world.layer_obstacle):
+        if collides(cookie, jelly):
+            print("충돌: ", jelly)
+            game_world.remove_object(jelly)
     delay(0.06)
 
 def exit():
