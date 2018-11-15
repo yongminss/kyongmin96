@@ -127,11 +127,13 @@ class Cookie:
         
     def handle_events(self, e):
         if (e.type, e.key) == (SDL_KEYDOWN, SDLK_DOWN):
-            self.state = self.SLIDE
-            self.y = 180
+            if self.jstate == False:
+                self.state = self.SLIDE
+                self.y = 180
         elif (e.type, e.key) == (SDL_KEYUP, SDLK_DOWN):
-            self.state = self.RUN
-            self.y = 215
+            if self.jstate == False:
+                self.state = self.RUN
+                self.y = 215
         if (e.type, e.key) == (SDL_KEYDOWN, SDLK_SPACE):
             if self.spaceClick == True:
                 self.state = self.JUMP
