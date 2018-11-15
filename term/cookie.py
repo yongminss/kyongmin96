@@ -103,4 +103,9 @@ class Cookie:
             self.frame = (self.frame + 1) % 2
         
     def handle_events(self, e):
-        pass
+        if (e.type, e.key) == (SDL_KEYDOWN, SDLK_DOWN):
+            self.state = self.SLIDE
+            self.y = 180
+        elif (e.type, e.key) == (SDL_KEYUP, SDLK_DOWN):
+            self.state = self.RUN
+            self.y = 215
