@@ -65,6 +65,7 @@ class Cookie:
         self.x = 250    # 쿠키 x좌표
         self.y = 215    # 쿠키 y좌표
         self.frame = 0
+        self.jspeed = 0
 
     def get_bb(self):
         if self.state == self.RUN:
@@ -101,6 +102,13 @@ class Cookie:
             self.frame = (self.frame + 1) % 6
         elif self.state == self.SLIDE:
             self.frame = (self.frame + 1) % 2
+        # 점프
+        if self.state == self.JUMP:
+            self.y += self.jspeed
+            self.jspeed -= 1
+            if self.y <= 215:
+                self.state = self.RUN
+                self.y = 215
         
     def handle_events(self, e):
         if (e.type, e.key) == (SDL_KEYDOWN, SDLK_DOWN):
@@ -109,3 +117,6 @@ class Cookie:
         elif (e.type, e.key) == (SDL_KEYUP, SDLK_DOWN):
             self.state = self.RUN
             self.y = 215
+        if (e.type, e.key) == (SDL_KEYDOWN, SDLK_SPACE):
+            self.state = self.JUMP
+            self.jspeed = 10
