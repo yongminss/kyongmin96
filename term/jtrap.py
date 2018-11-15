@@ -28,8 +28,8 @@ class jTrap:
     def update(self):
         self.frame += 10
         # 1단 점프 함정 이벤트 발생 조건
-        if self.frame > 150:
+        if self.frame > 500:
             self.state = self.ON
         # 1단 점프 함정 state -> ON 일 때,
         if self.state == self.ON:
-            self.x -= 10
+            self.x -= 15

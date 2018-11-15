@@ -25,8 +25,8 @@ class sTrap:
     def update(self):
         self.frame += 10
         # 슬라이드 함정 발생 조건
-        if self.frame > 250:
+        if self.frame > 3000:
             self.state = self.ON
         # 슬라이드 함정 state -> ON 일 때,
         if self.state == self.ON:
-            self.x -= 10
+            self.x -= 15

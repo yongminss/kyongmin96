@@ -28,8 +28,8 @@ class djTrap:
     def update(self):
         self.frame += 10
         # 2단 점프 함정 이벤트 발생 조건
-        if self.frame > 200:
+        if self.frame > 1000:
             self.state = self.ON
         # 2단 점프 함정 state -> ON 일 때,
         if self.state == self.ON:
-            self.x -= 10
+            self.x -= 15

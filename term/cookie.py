@@ -108,7 +108,7 @@ class Cookie:
         if self.state == self.JUMP:
             self.y += self.jspeed
             self.jstate = True
-            self.jspeed -= 1
+            self.jspeed -= 2
             if self.y <= 215:
                 self.state = self.RUN
                 self.jstate = False
@@ -117,14 +117,12 @@ class Cookie:
         # 더블 점프
         if self.state == self.DOUBLE_JUMP:
             self.y += self.jspeed
-            self.jspeed -= 1
+            self.jspeed -= 2
             if self.y <= 215:
                 self.state = self.RUN
                 self.jstate = False
                 self.y = 215
                 self.spaceClick = True
-            
-        print(self.jspeed)
                 
         
     def handle_events(self, e):
@@ -137,8 +135,8 @@ class Cookie:
         if (e.type, e.key) == (SDL_KEYDOWN, SDLK_SPACE):
             if self.spaceClick == True:
                 self.state = self.JUMP
-                self.jspeed = 10
+                self.jspeed = 15
                 if self.jstate == True:
                     self.state = self.DOUBLE_JUMP
-                    self.jspeed += 3
+                    self.jspeed += 5
                     self.spaceClick = False

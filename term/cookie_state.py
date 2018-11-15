@@ -18,6 +18,8 @@ def handle_events():
     for e in events:
         if e.type == SDL_QUIT:
              game_framework.quit()
+        elif (e.type, e.key) == (SDL_KEYDOWN, SDLK_ESCAPE):
+            game_framework.pop_state()
         else:
             cookie.handle_events(e)
 
@@ -69,7 +71,10 @@ def update():
     for jelly in game_world.objects_at_layer(game_world.layer_obstacle):
         if collides(cookie, jelly):
             game_world.remove_object(jelly)
-    delay(0.06)
+        else:
+            pass
+            
+    delay(0.04)
 
 def exit():
     game_world.clear()
