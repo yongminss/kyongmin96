@@ -114,6 +114,8 @@ class Cookie:
                 self.jstate = False
                 self.y = 215
                 self.spaceClick = True
+                self.frame = 0
+                
         # 더블 점프
         if self.state == self.DOUBLE_JUMP:
             self.y += self.jspeed
@@ -123,6 +125,7 @@ class Cookie:
                 self.jstate = False
                 self.y = 215
                 self.spaceClick = True
+                self.frame = 0
                 
         
     def handle_events(self, e):
