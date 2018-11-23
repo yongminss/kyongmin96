@@ -1,4 +1,7 @@
 from pico2d import *
+import game_framework
+import time
+
 
 class ParallexLayer:
     def __init__(self, imageName):
@@ -13,13 +16,16 @@ class ParallexLayer:
         self.image.clip_draw_to_origin(self.x2, 0, self.w2, self.h, self.w1, 0)
     
     def update(self):
-        self.frame += 5
+        # 바닥 애니메이션 처리
+        self.frame += 8
         self.x1 = self.frame % self.image.w
         self.w1 = self.image.w - self.x1
         self.x2 = 0
         self.w2 = self.cw - self.w1
 
+
 class Ground:
+    First, Second = 0, 1
     def __init__(self):
         self.Fground = [
             ParallexLayer('../term/cookierun_image/Ground_01.png')
@@ -27,9 +33,25 @@ class Ground:
         self.Sground = [
             ParallexLayer('../term/cookierun_image/Ground_02.png')
             ]
+        self.state = self.First
+        self.startTime = time.time()
 
     def draw(self):
-        for l in self.Fground: l.draw()
+        if self.state == self.First:
+            for l in self.Fground: l.draw()
+        elif self.state == self.Second:
+            for l in self.Sground: l.draw()
 
     def update(self):
-        for l in self.Fground: l.update()
+        # 시간처리
+        stateTime = time.time() - self.startTime
+        print(stateTime)
+        if stateTime >= 30.0:
+            self.state = self.Second
+        if stateTime >= 60.0:
+            game_framework.quit()
+        
+        if self.state == self.First:
+            for l in self.Fground: l.update()
+        elif self.state == self.Second:
+            for l in self.Sground: l.update()
