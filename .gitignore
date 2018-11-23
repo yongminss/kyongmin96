@@ -2,5 +2,4 @@
 -venv
 .idea
 __pycache__
-term/__pycache__/cookie_state.cpython-37.pyc
-*.pyc
+.pyc
