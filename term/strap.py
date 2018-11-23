@@ -8,7 +8,7 @@ class sTrap:
         if sTrap.image == None:
             self.image = load_image('../term/cookierun_image/Slide_trap.png')
         self.x = 900
-        self.y = 450
+        self.y = 500
         self.state = self.OFF
         self.frame = 0
 

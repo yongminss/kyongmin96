@@ -63,7 +63,7 @@ class Cookie:
         self.cookie = load_image('../term/cookierun_image/Cookie_Run_State.png')
         self.state = self.RUN   # 쿠키의 상태
         self.x = 250    # 쿠키 x좌표
-        self.y = 215    # 쿠키 y좌표
+        self.y = 265    # 쿠키 y좌표
         self.frame = 0
         self.jspeed = 0
         self.jstate = False
@@ -109,10 +109,10 @@ class Cookie:
             self.y += self.jspeed
             self.jstate = True
             self.jspeed -= 2
-            if self.y <= 215:
+            if self.y <= 265:
                 self.state = self.RUN
                 self.jstate = False
-                self.y = 215
+                self.y = 265
                 self.spaceClick = True
                 self.frame = 0
                 
@@ -120,10 +120,10 @@ class Cookie:
         if self.state == self.DOUBLE_JUMP:
             self.y += self.jspeed
             self.jspeed -= 2
-            if self.y <= 215:
+            if self.y <= 265:
                 self.state = self.RUN
                 self.jstate = False
-                self.y = 215
+                self.y = 265
                 self.spaceClick = True
                 self.frame = 0
                 
@@ -132,11 +132,11 @@ class Cookie:
         if (e.type, e.key) == (SDL_KEYDOWN, SDLK_DOWN):
             if self.jstate == False:
                 self.state = self.SLIDE
-                self.y = 180
+                self.y = 230
         elif (e.type, e.key) == (SDL_KEYUP, SDLK_DOWN):
             if self.jstate == False:
                 self.state = self.RUN
-                self.y = 215
+                self.y = 265
         if (e.type, e.key) == (SDL_KEYDOWN, SDLK_SPACE):
             if self.spaceClick == True:
                 self.state = self.JUMP

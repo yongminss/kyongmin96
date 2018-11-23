@@ -8,7 +8,7 @@ class Jelly:
         if Jelly.jelly == None:
             self.jelly = load_image('../term/cookierun_image/Item_Jelly.png')
         self.x = 900  # 젤리 x 좌표
-        self.y = 215  # 젤리 y 좌표
+        self.y = 270  # 젤리 y 좌표
         self.state = self.OFF
         self.frame = 0
 

@@ -9,7 +9,7 @@ class jTrap:
         if jTrap.image == None:
             jTrap.image = load_image('../term/cookierun_image/Jump_trap_01.png')
         self.x = 900
-        self.y = 175
+        self.y = 225
         self.state = self.OFF
         # 그 외 변수
         self.frame = 0

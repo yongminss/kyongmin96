@@ -8,7 +8,7 @@ class Potion:
         if Potion.potion == None:
             self.potion = load_image('../term/cookierun_image/Item_HP.png')
         self.x = 900  # 포션 x좌표
-        self.y = 215  # 포션 y좌표
+        self.y = 270  # 포션 y좌표
         self.state = self.OFF
         self.frame = 0
 
