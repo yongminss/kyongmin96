@@ -1,4 +1,5 @@
 from pico2d import *
+import time
 
 class ParallexLayer:
     def __init__(self, imageName):
@@ -20,6 +21,7 @@ class ParallexLayer:
         self.w2 = self.cw - self.w1
 
 class Stage:
+    First, Second = 0, 1
     def __init__(self):
         self.Fstage = [
             ParallexLayer('../term/cookierun_image/Stage_01.png')
@@ -27,9 +29,22 @@ class Stage:
         self.Sstage = [
             ParallexLayer('../term/cookierun_image/Stage_02.png')
             ]
+        self.state = self.First
+        self.startTime = time.time()
         
     def draw(self):
-        for l in self.Fstage: l.draw()
+        if self.state == self.First:
+            for l in self.Fstage: l.draw()
+        elif self.state == self.Second:
+            for l in self.Sstage: l.draw()
 
     def update(self):
-        for l in self.Fstage: l.update()
+        stateTime = time.time() - self.startTime
+        print(stateTime)
+        if stateTime >= 30.0:
+            self.state = self.Second
+
+        if self.state == self.First:
+            for l in self.Fstage: l.update()
+        elif self.state == self.Second:
+            for l in self.Sstage: l.update()
