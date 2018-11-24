@@ -45,7 +45,6 @@ class Ground:
     def update(self):
         # 시간처리
         stateTime = time.time() - self.startTime
-        print(stateTime)
         if stateTime >= 30.0:
             self.state = self.Second
         if stateTime >= 60.0:

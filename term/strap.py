@@ -29,4 +29,4 @@ class sTrap:
             self.state = self.ON
         # 슬라이드 함정 state -> ON 일 때,
         if self.state == self.ON:
-            self.x -= 15
+            self.x -= 10

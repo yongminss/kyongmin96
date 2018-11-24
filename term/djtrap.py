@@ -32,4 +32,4 @@ class djTrap:
             self.state = self.ON
         # 2단 점프 함정 state -> ON 일 때,
         if self.state == self.ON:
-            self.x -= 15
+            self.x -= 10

@@ -40,7 +40,6 @@ class Stage:
 
     def update(self):
         stateTime = time.time() - self.startTime
-        print(stateTime)
         if stateTime >= 30.0:
             self.state = self.Second
 
