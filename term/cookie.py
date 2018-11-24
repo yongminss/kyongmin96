@@ -140,7 +140,7 @@ class Cookie:
         if (e.type, e.key) == (SDL_KEYDOWN, SDLK_SPACE):
             if self.spaceClick == True:
                 self.state = self.JUMP
-                self.jspeed = 15
+                self.jspeed = 18
                 if self.jstate == True:
                     self.state = self.DOUBLE_JUMP
                     self.jspeed += 5
