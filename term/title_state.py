@@ -4,9 +4,12 @@ import cookie_state
 
 class Title:
     def __init__(self):
-        self.image = load_image('../term/cookierun_image/cookierun_title.png')
+        self.image = load_image('../term/cookierun_image/Title.png')
+        self.button = load_image('../term/cookierun_image/GameStart_button.png')
+
     def draw(self):
-        self.image.draw(400,300)
+        self.image.draw(400, 300)
+        self.button.draw(400, 40)
 
 def handle_events():
 
@@ -20,6 +23,11 @@ def handle_events():
                 game_framework.quit()
             elif e.key == SDLK_SPACE:
                 game_framework.change_state(cookie_state)
+        elif e.type == SDL_MOUSEBUTTONDOWN:
+            if e.button == SDL_BUTTON_LEFT:
+                tx, ty = e.x, 600 - e.y
+                if e.x >= 275 and e.x <= 275 + 250 and e.y >= 530 and e.y <= 590:
+                    game_framework.change_state(cookie_state)
             
 def enter():
 
