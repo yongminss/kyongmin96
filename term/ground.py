@@ -17,7 +17,7 @@ class ParallexLayer:
     
     def update(self):
         # 바닥 애니메이션 처리
-        self.frame += 8
+        self.frame += 10
         self.x1 = self.frame % self.image.w
         self.w1 = self.image.w - self.x1
         self.x2 = 0
