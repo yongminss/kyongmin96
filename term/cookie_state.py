@@ -2,11 +2,16 @@ from pico2d import *
 import game_framework
 import game_world
 import random
-from cookie import Cookie
+# 백그라운드 및 UI
 from stage import Stage
 from ground import Ground
 from hp import HP
+# 캐릭터
+from cookie import Cookie
+# 오브젝트
 from jelly import Jelly
+from potion import Potion
+from jtrap import jTrap
 from djtrap import djTrap
 from strap import sTrap
 
@@ -37,21 +42,17 @@ def collides(a, b):
 
 def enter():
 
-    global stage, ground, cookie, jelly, hp, djtrap, strap
+    global stage, ground, cookie, hp, jelly, potion, jtrap, djtrap, strap
 
     stage = Stage()         # 스테이지
     ground = Ground()       # 바닥
     hp = HP()               # 체력
     cookie = Cookie()       # 캐릭터
-    djtrap = djTrap()       # 2단 점프 함정
-    strap = sTrap()         # 슬라이드 함정
 
     game_world.add_object(stage, game_world.layer_bg)
     game_world.add_object(ground, game_world.layer_bg)
     game_world.add_object(hp, game_world.layer_bg)
     game_world.add_object(cookie, game_world.layer_player)
-    game_world.add_object(djtrap, game_world.layer_obstacle)
-    game_world.add_object(strap, game_world.layer_obstacle)
 
 def draw():
     clear_canvas()
@@ -60,20 +61,27 @@ def draw():
 
 def update():
     
-    jelly = Jelly()
+    jelly = Jelly()     # 젤리 (점수)
+    potion = Potion()
     
-    create = random.randint(0, 100)
-    print(create)
+    Jcreate = random.randint(0, 100)
+    Pcreate = random.randint(0, 100)
     
     # 오브젝트 생성
-    if create <= 30:
+    if Jcreate <= 30:
         game_world.add_object(jelly, game_world.layer_obstacle)
+    if Pcreate <= 1:
+        game_world.add_object(potion, game_world.layer_obstacle)
     # 게임월드 업데이트
     game_world.update()
     # 충돌처리
     for obj in game_world.all_objects():
         if isinstance(obj, Jelly):
             if collides(cookie, obj):
+                game_world.remove_object(obj)
+        if isinstance(obj, Potion):
+            if collides(cookie, obj):
+                hp.HP_count += 50
                 game_world.remove_object(obj)
     
 

@@ -1,4 +1,5 @@
 from pico2d import *
+import game_framework
 
 class HP:
     MAX_HP = 500
@@ -13,10 +14,12 @@ class HP:
         self.HP.clip_draw(0, 0, self.HP_count, 64, self.x, self.y)
 
     def update(self):
-        self.HP_count -= 2
+        self.HP_count -= 1
         # 체력 최대치
         if self.HP_count >= self.MAX_HP:
             self.HP_count = self.MAX_HP
+        if self.HP_count <= 0:
+            game_framework.quit()
                         
     def exit(self):
         pass
