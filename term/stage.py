@@ -14,13 +14,14 @@ class ParallexLayer:
         self.image.clip_draw_to_origin(self.x2, 0, self.w2, self.h, self.w1, 0)
     
     def update(self):
-        self.frame += 10
+        self.frame += Stage.SPEED
         self.x1 = self.frame % self.image.w
         self.w1 = self.image.w - self.x1
         self.x2 = 0
         self.w2 = self.cw - self.w1
 
 class Stage:
+    SPEED = 10
     First, Second = 0, 1
     def __init__(self):
         self.Fstage = [

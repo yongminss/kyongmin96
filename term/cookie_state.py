@@ -2,6 +2,7 @@ from pico2d import *
 import game_framework
 import game_world
 import random
+import time
 # 백그라운드 및 UI
 from stage import Stage
 from ground import Ground
@@ -43,7 +44,7 @@ def collides(a, b):
 def enter():
 
     global stage, ground, cookie, hp, jelly, potion, jtrap, djtrap, strap
-
+    
     stage = Stage()         # 스테이지
     ground = Ground()       # 바닥
     hp = HP()               # 체력
@@ -62,16 +63,20 @@ def draw():
 def update():
     
     jelly = Jelly()     # 젤리 (점수)
-    potion = Potion()
+    potion = Potion()   # 포션 (체력 회복)
+    jtrap = jTrap()     # 1단 점프 함정
     
     Jcreate = random.randint(0, 100)
     Pcreate = random.randint(0, 100)
-    
+    JTcreate = random.randint(0, 100)
+
     # 오브젝트 생성
     if Jcreate <= 30:
         game_world.add_object(jelly, game_world.layer_obstacle)
     if Pcreate <= 1:
         game_world.add_object(potion, game_world.layer_obstacle)
+    if JTcreate <= 1:
+        game_world.add_object(jtrap, game_world.layer_obstacle)
     # 게임월드 업데이트
     game_world.update()
     # 충돌처리
@@ -83,6 +88,11 @@ def update():
             if collides(cookie, obj):
                 hp.HP_count += 50
                 game_world.remove_object(obj)
+        if isinstance(obj, jTrap):
+            if collides(cookie, obj):
+                game_world.remove_object(obj)
+                hp.HP_count -= 50
+
     
 
 def exit():
