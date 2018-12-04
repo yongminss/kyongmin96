@@ -1,4 +1,5 @@
 from pico2d import *
+import game_world
 import config
 
 class jTrap:
@@ -23,3 +24,5 @@ class jTrap:
 
     def update(self):
         self.x -= 10
+        if self.x <= -10:
+            game_world.remove_object(self)
