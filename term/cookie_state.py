@@ -65,12 +65,14 @@ def update():
     jelly = Jelly()     # 젤리 (점수)
     potion = Potion()   # 포션 (체력 회복)
     jtrap = jTrap()     # 1단 점프 함정
-    djtrap = djTrap()
+    djtrap = djTrap()   # 2단 점프 함정
+    strap = sTrap()     # 슬라이드 함정
     
     Jcreate = random.randint(0, 100)
     Pcreate = random.randint(0, 100)
     JTcreate = random.randint(0, 100)
     DTcreate = random.randint(0, 100)
+    STcreate = random.randint(0, 100)
 
     # 오브젝트 생성
     if Jcreate <= 30:
@@ -81,6 +83,8 @@ def update():
         game_world.add_object(jtrap, game_world.layer_obstacle)
     if DTcreate <= 1:
         game_world.add_object(djtrap, game_world.layer_obstacle)
+    if STcreate <= 1:
+        game_world.add_object(strap, game_world.layer_obstacle)
         
     # 게임월드 업데이트
     game_world.update()
@@ -99,6 +103,10 @@ def update():
                 game_world.remove_object(obj)
                 hp.HP_count -= 50
         if isinstance(obj, djTrap):
+            if collides(cookie, obj):
+                game_world.remove_object(obj)
+                hp.HP_count -= 50
+        if isinstance(obj, sTrap):
             if collides(cookie, obj):
                 game_world.remove_object(obj)
                 hp.HP_count -= 50
