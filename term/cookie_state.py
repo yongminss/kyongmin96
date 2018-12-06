@@ -61,31 +61,28 @@ def draw():
     update_canvas()
 
 def update():
-    
-    jelly = Jelly()     # 젤리 (점수)
-    potion = Potion()   # 포션 (체력 회복)
-    jtrap = jTrap()     # 1단 점프 함정
-    djtrap = djTrap()   # 2단 점프 함정
-    strap = sTrap()     # 슬라이드 함정
-    
-    Jcreate = random.randint(0, 100)
-    Pcreate = random.randint(0, 100)
-    JTcreate = random.randint(0, 100)
-    DTcreate = random.randint(0, 100)
-    STcreate = random.randint(0, 100)
+    create = random.randint(0, 100)
+    TrapPattern = random.randint(0, 3)
 
     # 오브젝트 생성
-    if Jcreate <= 30:
+    if create <= 30:
+        jelly = Jelly()  # 젤리 (점수)
         game_world.add_object(jelly, game_world.layer_obstacle)
-    if Pcreate <= 1:
+    elif create > 30 and create <= 31:
+        potion = Potion()  # 포션 (체력 회복)
         game_world.add_object(potion, game_world.layer_obstacle)
-    if JTcreate <= 1:
-        game_world.add_object(jtrap, game_world.layer_obstacle)
-    if DTcreate <= 1:
-        game_world.add_object(djtrap, game_world.layer_obstacle)
-    if STcreate <= 1:
-        game_world.add_object(strap, game_world.layer_obstacle)
-        
+    # 함정의 경우
+    elif create > 31 and create <= 33:
+        if TrapPattern == 0:
+            jtrap = jTrap()  # 1단 점프 함정
+            game_world.add_object(jtrap, game_world.layer_obstacle)
+        elif TrapPattern == 1:
+            djtrap = djTrap()  # 2단 점프 함정
+            game_world.add_object(djtrap, game_world.layer_obstacle)
+        elif TrapPattern == 2:
+            strap = sTrap()  # 슬라이드 함정
+            game_world.add_object(strap, game_world.layer_obstacle)
+
     # 게임월드 업데이트
     game_world.update()
     # 충돌처리
@@ -110,7 +107,6 @@ def update():
             if collides(cookie, obj):
                 game_world.remove_object(obj)
                 hp.HP_count -= 50
-
     
 
 def exit():

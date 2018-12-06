@@ -1,7 +1,5 @@
 from pico2d import *
-import game_framework
-import time
-
+from stage import Stage
 
 class ParallexLayer:
     def __init__(self, imageName):
@@ -17,7 +15,7 @@ class ParallexLayer:
     
     def update(self):
         # 바닥 애니메이션 처리
-        self.frame += 10
+        self.frame += stage.SPEED
         self.x1 = self.frame % self.image.w
         self.w1 = self.image.w - self.x1
         self.x2 = 0
@@ -25,7 +23,6 @@ class ParallexLayer:
 
 
 class Ground:
-    First, Second = 0, 1
     def __init__(self):
         self.Fground = [
             ParallexLayer('../term/cookierun_image/Ground_01.png')
@@ -33,24 +30,17 @@ class Ground:
         self.Sground = [
             ParallexLayer('../term/cookierun_image/Ground_02.png')
             ]
-        self.state = self.First
-        self.startTime = time.time()
+        global stage
+        stage = Stage()
 
     def draw(self):
-        if self.state == self.First:
+        if stage.state == stage.First:
             for l in self.Fground: l.draw()
-        elif self.state == self.Second:
+        elif stage.state == stage.Second:
             for l in self.Sground: l.draw()
 
     def update(self):
-        # 시간처리
-        stateTime = time.time() - self.startTime
-        if stateTime >= 30.0:
-            self.state = self.Second
-        if stateTime >= 60.0:
-            game_framework.quit()
-        
-        if self.state == self.First:
+        if stage.state == stage.First:
             for l in self.Fground: l.update()
-        elif self.state == self.Second:
+        elif stage.state == stage.Second:
             for l in self.Sground: l.update()

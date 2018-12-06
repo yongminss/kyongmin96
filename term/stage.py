@@ -1,4 +1,5 @@
 from pico2d import *
+import game_framework
 import time
 
 class ParallexLayer:
@@ -43,6 +44,8 @@ class Stage:
         stateTime = time.time() - self.startTime
         if stateTime >= 30.0:
             self.state = self.Second
+        elif stateTime >= 60.0:
+            game_framework.quit()
 
         if self.state == self.First:
             for l in self.Fstage: l.update()
