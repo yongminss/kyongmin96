@@ -14,6 +14,7 @@ class Cookie:
         self.jspeed = 0
         self.jstate = False
         self.spaceClick = True
+        self.count = 0
 
     def get_bb(self):
         if self.state == self.RUN:
@@ -72,6 +73,8 @@ class Cookie:
                 self.y = 265
                 self.spaceClick = True
                 self.frame = 0
+
+        self.count = (self.count + 1) % 4
                 
         
     def handle_events(self, e):
