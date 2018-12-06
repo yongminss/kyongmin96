@@ -1,10 +1,11 @@
 from pico2d import *
+import game_framework
 import game_world
 import config
 
 class Potion:
     potion = None
-    OFF, ON = 0, 1 
+    RUN_SPEED_PPS = 500
     def __init__(self):
         if Potion.potion == None:
             self.potion = load_image('../term/cookierun_image/Item_HP.png')
@@ -21,7 +22,7 @@ class Potion:
             draw_rectangle(*self.get_bb())
         
     def update(self):
-        self.x -= 10
+        self.x -= Potion.RUN_SPEED_PPS * game_framework.frame_time
         if self.x <= -10:
             game_world.remove_object(self)
 

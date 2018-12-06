@@ -18,13 +18,13 @@ class Cookie:
 
     def get_bb(self):
         if self.state == self.RUN:
-            return self.x - 30, self.y - 65, self.x + 60, self.y + 65
+            return self.x - 30, self.y - 65, self.x + 55, self.y + 65
         elif self.state == self.JUMP:
-            return self.x - 30, self.y - 40, self.x + 60, self.y + 70
+            return self.x - 30, self.y - 40, self.x + 55, self.y + 70
         elif self.state == self.DOUBLE_JUMP:
-            return self.x - 30, self.y - 40, self.x + 60, self.y + 70
+            return self.x - 30, self.y - 40, self.x + 55, self.y + 70
         elif self.state == self.SLIDE:
-            return self.x - 40, self.y - 30, self.x + 80, self.y + 40
+            return self.x - 40, self.y - 30, self.x + 65, self.y + 40
 
     def draw(self):
         if self.state == self.RUN:              # 달리기
@@ -74,7 +74,7 @@ class Cookie:
                 self.spaceClick = True
                 self.frame = 0
 
-        self.count = (self.count + 1) % 4
+        self.count = (self.count + 1) % 41
                 
         
     def handle_events(self, e):

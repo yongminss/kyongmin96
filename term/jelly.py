@@ -1,11 +1,12 @@
 from pico2d import *
 import random
+import game_framework
 import game_world
 import config
 
 class Jelly:
     jelly = None
-    OFF, ON = 0, 1
+    RUN_SPEED_PPS = 500
     def __init__(self):
         if Jelly.jelly == None:
             self.jelly = load_image('../term/cookierun_image/Item_Jelly.png')
@@ -22,6 +23,6 @@ class Jelly:
             draw_rectangle(*self.get_bb())
 
     def update(self):
-        self.x -= 10
+        self.x -= Jelly.RUN_SPEED_PPS * game_framework.frame_time
         if self.x <= -10:
             game_world.remove_object(self)

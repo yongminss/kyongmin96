@@ -1,4 +1,5 @@
 from pico2d import *
+import game_framework
 
 class ParallexLayer:
     def __init__(self, imageName):

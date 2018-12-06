@@ -1,10 +1,11 @@
 from pico2d import *
+import game_framework
 import game_world
 import config
 
 class sTrap:
     image = None
-    OFF, ON = 0, 1
+    RUN_SPEED_PPS = 500
     def __init__(self):
         if sTrap.image == None:
             self.image = load_image('../term/cookierun_image/Slide_trap.png')
@@ -12,7 +13,7 @@ class sTrap:
         self.y = 500
 
     def get_bb(self):
-        return self.x - 100, self.y - 225, self.x + 100, self.y + 150
+        return self.x - 40, self.y - 225, self.x + 40, self.y + 150
         
     def draw(self):
         self.image.draw(self.x, self.y)
@@ -21,7 +22,7 @@ class sTrap:
             draw_rectangle(*self.get_bb())
 
     def update(self):
-        self.x -= 10
+        self.x -= sTrap.RUN_SPEED_PPS * game_framework.frame_time
         if self.x <= -10:
             game_world.remove_object(self)
         

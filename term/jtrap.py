@@ -1,10 +1,11 @@
 from pico2d import *
+import game_framework
 import game_world
 import config
 
 class jTrap:
     image = None
-    OFF, ON = 0, 1
+    RUN_SPEED_PPS = 500
     def __init__(self):
         # 1단 점프 함정 초기화
         if jTrap.image == None:
@@ -23,6 +24,6 @@ class jTrap:
             draw_rectangle(*self.get_bb())
 
     def update(self):
-        self.x -= 10
+        self.x -= jTrap.RUN_SPEED_PPS * game_framework.frame_time
         if self.x <= -10:
             game_world.remove_object(self)

@@ -64,17 +64,15 @@ def update():
     create = random.randint(0, 100)
     TrapPattern = random.randint(0, 3)
 
-    print(cookie.count)
-
     # 오브젝트 생성
     if create <= 30:
         jelly = Jelly()  # 젤리 (점수)
         game_world.add_object(jelly, game_world.layer_obstacle)
-    elif create == 31:
+    elif create == 31 or create == 32:
         potion = Potion()  # 포션 (체력 회복)
         game_world.add_object(potion, game_world.layer_obstacle)
     # 함정의 경우
-    if cookie.count == 3:
+    if cookie.count == 40:
         if TrapPattern == 0:
             jtrap = jTrap()  # 1단 점프 함정
             game_world.add_object(jtrap, game_world.layer_obstacle)
@@ -109,7 +107,6 @@ def update():
             if collides(cookie, obj):
                 game_world.remove_object(obj)
                 hp.HP_count -= 50
-    
 
 def exit():
     game_world.clear()
