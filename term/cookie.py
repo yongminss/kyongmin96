@@ -1,5 +1,5 @@
 from pico2d import *
-import game_world
+import game_framework
 import config
 
 class Cookie:
@@ -74,7 +74,9 @@ class Cookie:
                 self.spaceClick = True
                 self.frame = 0
 
-        self.count = (self.count + 1) % 41
+
+        # 함정 등장 카운트
+        self.count += 1 * game_framework.frame_time
                 
         
     def handle_events(self, e):
