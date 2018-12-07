@@ -1,5 +1,6 @@
 from pico2d import *
 import game_framework
+import time
 
 class ParallexLayer:
     def __init__(self, imageName):
@@ -31,7 +32,8 @@ class Stage:
             ParallexLayer('../term/cookierun_image/Stage_02.png')
             ]
         self.state = self.First
-        
+        self.StartTime = time.time()
+
     def draw(self):
         if self.state == self.First:
             for l in self.Fstage: l.draw()
@@ -40,6 +42,13 @@ class Stage:
 
     def update(self):
         self.RUN_SPEED_PPS += self.RUN_SPEED_PPS * game_framework.frame_time
+
+        StateTime = time.time() - self.StartTime
+
+        # 스테이지 변경 조건
+        if StateTime >= 30.0:
+            self.state = self.Second
+
         if self.state == self.First:
             for l in self.Fstage: l.update()
         elif self.state == self.Second:

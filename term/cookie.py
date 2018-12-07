@@ -17,6 +17,7 @@ class Cookie:
         self.spaceClick = False
         # 함정 등장 카운트
         self.count = 0
+        self.difficulty = 0
 
     def get_bb(self):
         if self.state == self.RUN:
@@ -91,9 +92,11 @@ class Cookie:
                 self.frame = 0
 
         # 함정 등장 카운트
-        self.count += 1 * game_framework.frame_time
-                
-        
+        self.count += (0.5 + self.difficulty) * game_framework.frame_time
+        self.difficulty += 0.01 * game_framework.frame_time
+        if self.difficulty >= 0.85:
+            self.difficulty = 0.85
+
     def handle_events(self, e):
         # 슬라이딩
         if (e.type, e.key) == (SDL_KEYDOWN, SDLK_DOWN):

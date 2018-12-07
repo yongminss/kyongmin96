@@ -20,7 +20,6 @@ class HP:
             self.HP_count -= 2
             self.fps = 0
 
-        print(self.HP_count)
         # 체력 최대치
         if self.HP_count >= self.MAX_HP:
             self.HP_count = self.MAX_HP

@@ -42,8 +42,8 @@ def collides(a, b):
 
 def enter():
 
-    global stage, ground, hp, cookie, jelly, potion, jtrap, djtrap, strap, startTime
-    
+    global stage, ground, hp, cookie, jelly, potion, jtrap, djtrap, strap
+
     stage = Stage()         # 스테이지
     ground = Ground()       # 바닥
     hp = HP()               # 체력
@@ -67,7 +67,7 @@ def update():
     if create <= 20:
         jelly = Jelly()  # 젤리 (점수)
         game_world.add_object(jelly, game_world.layer_obstacle)
-    elif create == 31 or create == 32:
+    elif create == 31:
         potion = Potion()  # 포션 (체력 회복)
         game_world.add_object(potion, game_world.layer_obstacle)
 
@@ -95,21 +95,21 @@ def update():
                 game_world.remove_object(obj)
         if isinstance(obj, Potion):
             if collides(cookie, obj):
-                #hp.HP_count += 50
+                hp.HP_count += 30
                 game_world.remove_object(obj)
         # 함정
         if isinstance(obj, jTrap):
             if collides(cookie, obj):
                 game_world.remove_object(obj)
-                #hp.HP_count -= 50
+                hp.HP_count -= 50
         if isinstance(obj, djTrap):
             if collides(cookie, obj):
                 game_world.remove_object(obj)
-                #hp.HP_count -= 50
+                hp.HP_count -= 50
         if isinstance(obj, sTrap):
             if collides(cookie, obj):
                 game_world.remove_object(obj)
-                #hp.HP_count -= 50
+                hp.HP_count -= 50
 
 def exit():
     game_world.clear()

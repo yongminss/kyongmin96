@@ -1,6 +1,7 @@
 from pico2d import *
 import game_framework
 import game_world
+import random
 import config
 
 class Potion:
@@ -9,8 +10,8 @@ class Potion:
     def __init__(self):
         if Potion.potion == None:
             self.potion = load_image('../term/cookierun_image/Item_HP.png')
-        self.x = 900  # 포션 x좌표
-        self.y = 270  # 포션 y좌표
+        self.x = 900                            # 포션 x좌표
+        self.y = 300 + random.randint(0, 100)   # 포션 y좌표
 
     def get_bb(self):
         return self.x - 20, self.y - 20, self.x + 20, self.y + 20

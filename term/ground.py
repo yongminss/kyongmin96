@@ -1,6 +1,6 @@
 from pico2d import *
 import game_framework
-from stage import Stage
+import time
 
 class ParallexLayer:
     def __init__(self, imageName):
@@ -16,7 +16,7 @@ class ParallexLayer:
     
     def update(self):
         # 바닥 애니메이션 처리
-        self.frame += Stage.RUN_SPEED_PPS
+        self.frame += Ground.RUN_SPEED_PPS
         self.x1 = self.frame % self.image.w
         self.w1 = self.image.w - self.x1
         self.x2 = 0
@@ -24,6 +24,8 @@ class ParallexLayer:
 
 
 class Ground:
+    RUN_SPEED_PPS = 10
+    First, Second = 0, 1
     def __init__(self):
         self.Fground = [
             ParallexLayer('../term/cookierun_image/Ground_01.png')
@@ -31,17 +33,25 @@ class Ground:
         self.Sground = [
             ParallexLayer('../term/cookierun_image/Ground_02.png')
             ]
-        global stage
-        stage = Stage()
+        self.state = Ground.First
+        self.StartTime = time.time()
 
     def draw(self):
-        if stage.state == stage.First:
+        if self.state == Ground.First:
             for l in self.Fground: l.draw()
-        elif stage.state == stage.Second:
+        elif self.state == Ground.Second:
             for l in self.Sground: l.draw()
 
     def update(self):
-        if stage.state == stage.First:
+        self.RUN_SPEED_PPS += self.RUN_SPEED_PPS * game_framework.frame_time
+
+        StateTime = time.time() - self.StartTime
+
+        # 바닥 변경 조건
+        if StateTime >= 30.0:
+            self.state = self.Second
+
+        if self.state == Ground.First:
             for l in self.Fground: l.update()
-        elif stage.state == stage.Second:
+        elif self.state == Ground.Second:
             for l in self.Sground: l.update()
