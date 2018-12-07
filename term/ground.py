@@ -1,4 +1,5 @@
 from pico2d import *
+import game_framework
 from stage import Stage
 
 class ParallexLayer:
@@ -15,7 +16,7 @@ class ParallexLayer:
     
     def update(self):
         # 바닥 애니메이션 처리
-        self.frame += stage.SPEED
+        self.frame += Stage.RUN_SPEED_PPS
         self.x1 = self.frame % self.image.w
         self.w1 = self.image.w - self.x1
         self.x2 = 0
