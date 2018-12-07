@@ -10,10 +10,12 @@ class Cookie:
         self.state = self.RUN   # 쿠키의 상태
         self.x = 250    # 쿠키 x좌표
         self.y = 265    # 쿠키 y좌표
+        self.fps = 0
         self.frame = 0
-        self.jspeed = 0
-        self.jstate = False
-        self.spaceClick = True
+        self.Jump_count = 0
+        self.spaceClickCount = 0
+        self.spaceClick = False
+        # 함정 등장 카운트
         self.count = 0
 
     def get_bb(self):
@@ -43,56 +45,72 @@ class Cookie:
             draw_rectangle(*self.get_bb())
 
     def update(self):
+        self.fps += 10 * game_framework.frame_time
         if self.state == self.RUN:
-            self.frame = (self.frame + 1) % 3
-        elif self.state == self.JUMP:
-            self.frame = (self.frame + 1) % 1
+            if self.fps >= 3:
+                self.fps = 0
         elif self.state == self.DOUBLE_JUMP:
-            self.frame = (self.frame + 1) % 6
+            if self.fps >= 6:
+                self.fps = 0
         elif self.state == self.SLIDE:
-            self.frame = (self.frame + 1) % 2
-        # 점프
-        if self.state == self.JUMP:
-            self.y += self.jspeed
-            self.jstate = True
-            self.jspeed -= 2
-            if self.y <= 265:
-                self.state = self.RUN
-                self.jstate = False
-                self.y = 265
-                self.spaceClick = True
-                self.frame = 0
-                
-        # 더블 점프
-        if self.state == self.DOUBLE_JUMP:
-            self.y += self.jspeed
-            self.jspeed -= 2
-            if self.y <= 265:
-                self.state = self.RUN
-                self.jstate = False
-                self.y = 265
-                self.spaceClick = True
-                self.frame = 0
+            if self.fps >= 2:
+                self.fps = 0
 
+        # 쿠키가 달릴 때 (기본 State)
+        if self.state == self.RUN:
+            for i in range(0, 3):
+                if i <= self.fps and self.fps <= i + 1:
+                    self.frame = i
+        # 쿠키가 점프할 때 (1단 점프)
+        elif self.state == self.JUMP:
+            self.frame = 0
+        # 쿠키가 점프를 한번 더 할 때 (2단 점프)
+        elif self.state == self.DOUBLE_JUMP:
+            for i in range(0, 6):
+                if i <= self.fps and self.fps <= i + 1:
+                    self.frame = i
+        # 쿠키가 슬라이딩을 할 때 (슬라이드)
+        elif self.state == self.SLIDE:
+            if 0 <= self.fps and self.fps <= 1:
+                self.frame = 0
+            elif 1 <= self.fps and self.fps <= 2:
+                self.frame = 1
+
+        # 점프 이벤트를 수행 (SPACE바 눌렸을 때)
+        if self.state == self.JUMP or self.state == self.DOUBLE_JUMP:
+            self.spaceClick = True
+            self.y += self.Jump_count
+            self.Jump_count -= 60 * game_framework.frame_time
+            # 땅에 닿았을 때 (초기화)
+            if self.y <= 265:
+                self.y = 265
+                self.Jump_count = 0
+                self.state = self.RUN
+                self.spaceClickCount = 0
+                self.spaceClick = False
+                self.frame = 0
 
         # 함정 등장 카운트
         self.count += 1 * game_framework.frame_time
                 
         
     def handle_events(self, e):
+        # 슬라이딩
         if (e.type, e.key) == (SDL_KEYDOWN, SDLK_DOWN):
-            if self.jstate == False:
+            if self.state == self.RUN:
                 self.state = self.SLIDE
                 self.y = 230
         elif (e.type, e.key) == (SDL_KEYUP, SDLK_DOWN):
-            if self.jstate == False:
+            if self.state == self.SLIDE:
+                self.frame = 0
                 self.state = self.RUN
                 self.y = 265
+        # 점프
         if (e.type, e.key) == (SDL_KEYDOWN, SDLK_SPACE):
-            if self.spaceClick == True:
+            if self.spaceClickCount < 2:
                 self.state = self.JUMP
-                self.jspeed = 18
-                if self.jstate == True:
+                self.Jump_count = 13
+                self.spaceClickCount += 1
+                if self.spaceClick == True:
                     self.state = self.DOUBLE_JUMP
-                    self.jspeed += 5
-                    self.spaceClick = False
+                    self.Jump_count += 6

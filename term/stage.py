@@ -21,7 +21,7 @@ class ParallexLayer:
         self.w2 = self.cw - self.w1
 
 class Stage:
-    RUN_SPEED_PPS = 5
+    RUN_SPEED_PPS = 10
     First, Second = 0, 1
     def __init__(self):
         self.Fstage = [
