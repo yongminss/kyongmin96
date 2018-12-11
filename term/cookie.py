@@ -18,6 +18,8 @@ class Cookie:
         # 함정 등장 카운트
         self.count = 0
         self.difficulty = 0
+        # 점수
+        self.score = 0
 
     def get_bb(self):
         if self.state == self.RUN:
@@ -80,7 +82,7 @@ class Cookie:
         # 점프 이벤트를 수행 (SPACE바 눌렸을 때)
         if self.state == self.JUMP or self.state == self.DOUBLE_JUMP:
             self.spaceClick = True
-            self.y += self.Jump_count
+            self.y += self.Jump_count * (50 * game_framework.frame_time)
             self.Jump_count -= 60 * game_framework.frame_time
             # 땅에 닿았을 때 (초기화)
             if self.y <= 265:

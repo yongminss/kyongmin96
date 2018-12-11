@@ -6,6 +6,7 @@ import random
 from stage import Stage
 from ground import Ground
 from hp import HP
+import score
 # 캐릭터
 from cookie import Cookie
 # 오브젝트
@@ -43,6 +44,7 @@ def collides(a, b):
 def enter():
 
     global stage, ground, hp, cookie, jelly, potion, jtrap, djtrap, strap
+    global scoreLabel
 
     stage = Stage()         # 스테이지
     ground = Ground()       # 바닥
@@ -54,9 +56,17 @@ def enter():
     game_world.add_object(hp, game_world.layer_bg)
     game_world.add_object(cookie, game_world.layer_player)
 
+    # 스코어
+    label = score.Label("Score: ", 50, get_canvas_height() - 50, 45, 0)
+    label.color = (255, 255, 255)
+    score.labels.append(label)
+    scoreLabel = label
+
+
 def draw():
     clear_canvas()
     game_world.draw()
+    score.draw()
     update_canvas()
 
 def update():
@@ -70,7 +80,7 @@ def update():
     elif create == 31:
         potion = Potion()  # 포션 (체력 회복)
         game_world.add_object(potion, game_world.layer_obstacle)
-
+ 
     # 함정의 경우
     if cookie.count >= 1.0:
         if TrapPattern == 0:
@@ -92,6 +102,7 @@ def update():
     for obj in game_world.all_objects():
         if isinstance(obj, Jelly):
             if collides(cookie, obj):
+                cookie.score += 5
                 game_world.remove_object(obj)
         if isinstance(obj, Potion):
             if collides(cookie, obj):
@@ -111,8 +122,19 @@ def update():
                 game_world.remove_object(obj)
                 hp.HP_count -= 50
 
+        update_score()
+
+
+def update_score():
+    global scoreLabel
+    str = "Score: {:0.0f}".format(cookie.score)
+    scoreLabel.text = str
+
+
 def exit():
     game_world.clear()
+
+
 
 if __name__ == '__main__':
 	import sys
