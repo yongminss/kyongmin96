@@ -3,10 +3,13 @@ import game_framework
 import config
 
 class Cookie:
-    RUN, JUMP, DOUBLE_JUMP, SLIDE = 0, 1, 2, 3
+    Image = None
+    RUN, JUMP, DOUBLE_JUMP, SLIDE, COLLIDE = 0, 1, 2, 3, 4
     
     def __init__(self):
-        self.cookie = load_image('../term/cookierun_image/Cookie_Run_State.png')
+        if Cookie.Image == None:
+            self.cookie = load_image('../term/cookierun_image/Cookie_Run_State.png')
+            self.cookieCollide = load_image('../term/cookierun_image/cookie_run_collid.png')
         self.state = self.RUN   # 쿠키의 상태
         self.x = 250    # 쿠키 x좌표
         self.y = 265    # 쿠키 y좌표
@@ -37,6 +40,8 @@ class Cookie:
             return self.x - 30, self.y - 40, self.x + 55, self.y + 70
         elif self.state == self.SLIDE:
             return self.x - 40, self.y - 30, self.x + 65, self.y + 40
+        elif self.state == self.COLLIDE:
+            return self.x - 40, self.y - 30, self.x + 65, self.y + 40
 
     def draw(self):
         if self.state == self.RUN:              # 달리기
@@ -50,6 +55,8 @@ class Cookie:
         elif self.state == self.SLIDE:          # 슬라이딩
             self.cookie.clip_draw(self.frame * 170, 382 - 135 - 165 - 80, 170, 80,
                                   self.x, self.y)
+        elif self.state == self.COLLIDE:
+            self.cookieCollide.draw(self.x, self.y)
         # 충돌체크 박스
         if config.draws_bounding_box:
             draw_rectangle(*self.get_bb())
@@ -65,6 +72,13 @@ class Cookie:
         elif self.state == self.SLIDE:
             if self.fps >= 2:
                 self.fps = 0
+        elif self.state == self.COLLIDE:
+            if self.fps >= 3:
+                self.y = 265
+                self.spaceClickCount = 0
+                self.spaceClick = False
+                self.fps = 0
+                self.state = self.RUN
 
         # 쿠키가 달릴 때 (기본 State)
         if self.state == self.RUN:

@@ -72,7 +72,7 @@ def enter():
     item_sound = load_wav('item.wav')
     item_sound.set_volume(32)
     collide_sound = load_wav('collide.wav')
-    collide_sound.set_volume(32)
+    collide_sound.set_volume(50)
 
 
 def draw():
@@ -127,16 +127,22 @@ def update():
             if collides(cookie, obj):
                 game_world.remove_object(obj)
                 collide_sound.play()
+                cookie.fps = 0
+                cookie.state = cookie.COLLIDE
                 hp.HP_count -= 50
         if isinstance(obj, djTrap):
             if collides(cookie, obj):
                 game_world.remove_object(obj)
                 collide_sound.play()
+                cookie.fps = 0
+                cookie.state = cookie.COLLIDE
                 hp.HP_count -= 50
         if isinstance(obj, sTrap):
             if collides(cookie, obj):
                 game_world.remove_object(obj)
                 collide_sound.play()
+                cookie.fps = 0
+                cookie.state = cookie.COLLIDE
                 hp.HP_count -= 50
 
         update_score()
