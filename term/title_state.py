@@ -7,10 +7,12 @@ class Title:
     def __init__(self):
         self.image = load_image('../term/cookierun_image/Title.png')
         self.button = load_image('../term/cookierun_image/GameStart_button.png')
+        self.keyset = load_image('../term/cookierun_image/key.png')
 
     def draw(self):
         self.image.draw(400, 300)
         self.button.draw(400, 40)
+        self.keyset.draw(175, 540)
 
 def handle_events():
 
