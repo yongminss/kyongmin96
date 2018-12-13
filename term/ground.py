@@ -48,7 +48,7 @@ class Ground:
         StateTime = time.time() - self.StartTime
 
         # 바닥 변경 조건
-        if StateTime >= 30.0:
+        if StateTime >= 66.0:
             self.state = self.Second
 
         if self.state == Ground.First:

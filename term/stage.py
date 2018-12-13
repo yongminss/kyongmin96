@@ -33,6 +33,12 @@ class Stage:
             ]
         self.state = self.First
         self.StartTime = time.time()
+        self.StateTime = 0
+
+        # 사운드
+        self.stage_1_sound = load_music('Stage1.mp3')
+        self.stage_1_sound.set_volume(50)
+        self.stage_1_sound.repeat_play()
 
     def draw(self):
         if self.state == self.First:
@@ -43,11 +49,15 @@ class Stage:
     def update(self):
         self.RUN_SPEED_PPS += self.RUN_SPEED_PPS * game_framework.frame_time
 
-        StateTime = time.time() - self.StartTime
+        if self.StateTime < 66.0:
+            self.StateTime = time.time() - self.StartTime
 
-        # 스테이지 변경 조건
-        if StateTime >= 30.0:
-            self.state = self.Second
+            if self.StateTime >= 66.0:
+                self.state = self.Second
+                self.stage_2_sound = load_music('Stage2.mp3')
+                self.stage_2_sound.set_volume(50)
+                self.stage_2_sound.repeat_play()
+
 
         if self.state == self.First:
             for l in self.Fstage: l.update()

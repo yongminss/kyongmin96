@@ -20,6 +20,13 @@ class Cookie:
         self.difficulty = 0
         # 점수
         self.score = 0
+        # 사운드
+        global jump_sound, slide_sound
+
+        jump_sound = load_wav('jump.wav')
+        jump_sound.set_volume(32)
+        slide_sound = load_wav('slide.wav')
+        slide_sound.set_volume(32)
 
     def get_bb(self):
         if self.state == self.RUN:
@@ -104,6 +111,7 @@ class Cookie:
         if (e.type, e.key) == (SDL_KEYDOWN, SDLK_DOWN):
             if self.state == self.RUN:
                 self.state = self.SLIDE
+                slide_sound.play()
                 self.y = 230
         elif (e.type, e.key) == (SDL_KEYUP, SDLK_DOWN):
             if self.state == self.SLIDE:
@@ -114,8 +122,11 @@ class Cookie:
         if (e.type, e.key) == (SDL_KEYDOWN, SDLK_SPACE):
             if self.spaceClickCount < 2:
                 self.state = self.JUMP
+                jump_sound.play()
                 self.Jump_count = 13
                 self.spaceClickCount += 1
                 if self.spaceClick == True:
                     self.state = self.DOUBLE_JUMP
+                    jump_sound.play()
                     self.Jump_count += 6
+

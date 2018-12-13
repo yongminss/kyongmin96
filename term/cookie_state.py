@@ -25,6 +25,9 @@ def handle_events():
              game_framework.quit()
         elif (e.type, e.key) == (SDL_KEYDOWN, SDLK_ESCAPE):
             game_framework.pop_state()
+        # 체력 회복 (시연용)
+        if (e.type, e.key) == (SDL_KEYDOWN, SDLK_0):
+            hp.HP_count += 500
         else:
             cookie.handle_events(e)
 
@@ -45,6 +48,7 @@ def enter():
 
     global stage, ground, hp, cookie, jelly, potion, jtrap, djtrap, strap
     global scoreLabel
+    global jelly_sound, item_sound, collide_sound
 
     stage = Stage()         # 스테이지
     ground = Ground()       # 바닥
@@ -61,6 +65,14 @@ def enter():
     label.color = (255, 255, 255)
     score.labels.append(label)
     scoreLabel = label
+
+    # 사운드
+    jelly_sound = load_wav('jelly.wav')
+    jelly_sound.set_volume(32)
+    item_sound = load_wav('item.wav')
+    item_sound.set_volume(32)
+    collide_sound = load_wav('collide.wav')
+    collide_sound.set_volume(32)
 
 
 def draw():
@@ -103,23 +115,28 @@ def update():
         if isinstance(obj, Jelly):
             if collides(cookie, obj):
                 cookie.score += 5
+                jelly_sound.play()
                 game_world.remove_object(obj)
         if isinstance(obj, Potion):
             if collides(cookie, obj):
                 hp.HP_count += 30
+                item_sound.play()
                 game_world.remove_object(obj)
         # 함정
         if isinstance(obj, jTrap):
             if collides(cookie, obj):
                 game_world.remove_object(obj)
+                collide_sound.play()
                 hp.HP_count -= 50
         if isinstance(obj, djTrap):
             if collides(cookie, obj):
                 game_world.remove_object(obj)
+                collide_sound.play()
                 hp.HP_count -= 50
         if isinstance(obj, sTrap):
             if collides(cookie, obj):
                 game_world.remove_object(obj)
+                collide_sound.play()
                 hp.HP_count -= 50
 
         update_score()

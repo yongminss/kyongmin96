@@ -1,6 +1,7 @@
 from pico2d import *
 import game_framework
 import cookie_state
+title_sound = None
 
 class Title:
     def __init__(self):
@@ -23,6 +24,7 @@ def handle_events():
                 game_framework.quit()
             elif e.key == SDLK_SPACE:
                 game_framework.change_state(cookie_state)
+
         elif e.type == SDL_MOUSEBUTTONDOWN:
             if e.button == SDL_BUTTON_LEFT:
                 tx, ty = e.x, 600 - e.y
@@ -30,10 +32,14 @@ def handle_events():
                     game_framework.change_state(cookie_state)
             
 def enter():
-
-    global title
+    global title, title_sound
 
     title = Title()
+
+    # 사운드
+    title_sound = load_music('Title.mp3')
+    title_sound.set_volume(32)
+    title_sound.repeat_play()
 
 def draw():
 
