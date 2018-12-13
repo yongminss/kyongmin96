@@ -15,14 +15,13 @@ class ParallexLayer:
         self.image.clip_draw_to_origin(self.x2, 0, self.w2, self.h, self.w1, 0)
     
     def update(self):
-        self.frame += Stage.RUN_SPEED_PPS
+        self.frame += int(500 * game_framework.frame_time)
         self.x1 = self.frame % self.image.w
         self.w1 = self.image.w - self.x1
         self.x2 = 0
         self.w2 = self.cw - self.w1
 
 class Stage:
-    RUN_SPEED_PPS = 10
     First, Second = 0, 1
     def __init__(self):
         self.Fstage = [
@@ -47,7 +46,6 @@ class Stage:
             for l in self.Sstage: l.draw()
 
     def update(self):
-        self.RUN_SPEED_PPS += self.RUN_SPEED_PPS * game_framework.frame_time
 
         if self.StateTime < 66.5:
             self.StateTime = time.time() - self.StartTime

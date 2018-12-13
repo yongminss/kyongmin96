@@ -18,6 +18,8 @@ class Cookie:
         self.Jump_count = 0
         self.spaceClickCount = 0
         self.spaceClick = False
+        # 젤리 및 아이템 등장 카운트
+        self.itemcount = 0
         # 함정 등장 카운트
         self.count = 0
         self.difficulty = 0
@@ -113,6 +115,9 @@ class Cookie:
                 self.spaceClickCount = 0
                 self.spaceClick = False
                 self.frame = 0
+
+        # 아이템 등장 카운트
+        self.itemcount += 0.1 * game_framework.frame_time
 
         # 함정 등장 카운트
         self.count += (0.5 + self.difficulty) * game_framework.frame_time

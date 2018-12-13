@@ -90,12 +90,14 @@ def update():
 
 
     # 오브젝트 생성
-    if create <= 20:
+    if cookie.itemcount > 0.01:
         jelly = Jelly()  # 젤리 (점수)
         game_world.add_object(jelly, game_world.layer_obstacle)
-    elif create == 31:
-        potion = Potion()  # 포션 (체력 회복)
-        game_world.add_object(potion, game_world.layer_obstacle)
+        # 0.01초마다 5% 확률로 포션 생성
+        if create < 5:
+            potion = Potion()
+            game_world.add_object(potion, game_world.layer_obstacle)
+        cookie.itemcount = 0
  
     # 함정의 경우
     if cookie.count >= 1.0:

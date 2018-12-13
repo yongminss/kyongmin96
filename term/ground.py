@@ -16,7 +16,7 @@ class ParallexLayer:
     
     def update(self):
         # 바닥 애니메이션 처리
-        self.frame += Ground.RUN_SPEED_PPS
+        self.frame += int(500 * game_framework.frame_time)
         self.x1 = self.frame % self.image.w
         self.w1 = self.image.w - self.x1
         self.x2 = 0
@@ -24,7 +24,6 @@ class ParallexLayer:
 
 
 class Ground:
-    RUN_SPEED_PPS = 10
     First, Second = 0, 1
     def __init__(self):
         self.Fground = [
@@ -43,7 +42,6 @@ class Ground:
             for l in self.Sground: l.draw()
 
     def update(self):
-        self.RUN_SPEED_PPS += self.RUN_SPEED_PPS * game_framework.frame_time
 
         StateTime = time.time() - self.StartTime
 
