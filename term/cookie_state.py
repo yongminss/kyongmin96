@@ -15,6 +15,8 @@ from potion import Potion
 from jtrap import jTrap
 from djtrap import djTrap
 from strap import sTrap
+# 점수판
+import Score_state
 
 def handle_events():
     
@@ -47,7 +49,7 @@ def collides(a, b):
 def enter():
 
     global stage, ground, hp, cookie, jelly, potion, jtrap, djtrap, strap
-    global scoreLabel
+    global scoreLabel, Label
     global jelly_sound, item_sound, collide_sound
 
     stage = Stage()         # 스테이지
@@ -60,7 +62,7 @@ def enter():
     game_world.add_object(hp, game_world.layer_bg)
     game_world.add_object(cookie, game_world.layer_player)
 
-    # 스코어
+    # 점수
     label = score.Label("Score: ", 50, get_canvas_height() - 50, 45, 0)
     label.color = (255, 255, 255)
     score.labels.append(label)
@@ -75,6 +77,7 @@ def enter():
     collide_sound.set_volume(50)
 
 
+
 def draw():
     clear_canvas()
     game_world.draw()
@@ -84,6 +87,7 @@ def draw():
 def update():
     create = random.randint(0, 100)
     TrapPattern = random.randint(0, 3)
+
 
     # 오브젝트 생성
     if create <= 20:
@@ -112,33 +116,33 @@ def update():
     game_world.update()
     # 충돌처리
     for obj in game_world.all_objects():
-        if isinstance(obj, Jelly):
+        if isinstance(obj, Jelly) and hp.HP_count >= 0:
             if collides(cookie, obj):
                 cookie.score += 5
                 jelly_sound.play()
                 game_world.remove_object(obj)
         if isinstance(obj, Potion):
-            if collides(cookie, obj):
+            if collides(cookie, obj) and hp.HP_count >= 0:
                 hp.HP_count += 30
                 item_sound.play()
                 game_world.remove_object(obj)
         # 함정
         if isinstance(obj, jTrap):
-            if collides(cookie, obj):
+            if collides(cookie, obj) and hp.HP_count >= 0:
                 game_world.remove_object(obj)
                 collide_sound.play()
                 cookie.fps = 0
                 cookie.state = cookie.COLLIDE
                 hp.HP_count -= 50
         if isinstance(obj, djTrap):
-            if collides(cookie, obj):
+            if collides(cookie, obj) and hp.HP_count >= 0:
                 game_world.remove_object(obj)
                 collide_sound.play()
                 cookie.fps = 0
                 cookie.state = cookie.COLLIDE
                 hp.HP_count -= 50
         if isinstance(obj, sTrap):
-            if collides(cookie, obj):
+            if collides(cookie, obj) and hp.HP_count >= 0:
                 game_world.remove_object(obj)
                 collide_sound.play()
                 cookie.fps = 0
@@ -148,14 +152,23 @@ def update():
         update_score()
 
 
+        if hp.HP_count <= 0:
+            cookie.x -= 10 * game_framework.frame_time
+            if cookie.x <= -500:
+                game_framework.change_state(Score_state)
+
+
 def update_score():
     global scoreLabel
     str = "Score: {:0.0f}".format(cookie.score)
     scoreLabel.text = str
 
+def puase():
+    pass
 
 def exit():
     game_world.clear()
+    Score_state.scoretemp = cookie.score
 
 
 

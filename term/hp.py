@@ -23,8 +23,6 @@ class HP:
         # 체력 최대치
         if self.HP_count >= self.MAX_HP:
             self.HP_count = self.MAX_HP
-        if self.HP_count <= 0:
-            game_framework.quit()
                         
     def exit(self):
         pass

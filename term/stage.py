@@ -49,10 +49,10 @@ class Stage:
     def update(self):
         self.RUN_SPEED_PPS += self.RUN_SPEED_PPS * game_framework.frame_time
 
-        if self.StateTime < 66.0:
+        if self.StateTime < 66.5:
             self.StateTime = time.time() - self.StartTime
 
-            if self.StateTime >= 66.0:
+            if self.StateTime >= 66.5:
                 self.state = self.Second
                 self.stage_2_sound = load_music('Stage2.mp3')
                 self.stage_2_sound.set_volume(50)
